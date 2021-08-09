@@ -23,7 +23,7 @@ auto RPCs = std::make_tuple(
     MakeFunction("TestFunction", Type<int>(), TestFunction, std::tuple<Type<int>, Type<int>, Type<ADT> >())
 );
 ``` 
-The `1st` parameter is the name ID of the function, the `2nd` parameter is the return type, `3rd` is the function pointer for the implementation, then the `4th` parameter is a tuple of types.  
+The `1st` parameter is the name ID of the function, the `2nd` parameter is the return type, `3rd` is the function pointer for the implementation, then the `4th` parameter is a tuple of types for parameters to the function call.  
   
 After the list of functions is created, you need to create an interface to and RPC Service, then start hosting the service online on a port number.
 ```c++
@@ -36,8 +36,8 @@ if(service.Start(7971))
 ```
 
 ## Creating a Client
-You will need the following heades to create an RPC Client
-```
+You will need the following headers to create an RPC Client
+```c++
 #include <rpc-service/RPCService.h>
 ```
 
@@ -48,14 +48,13 @@ if(RPC("127.0.0.1", 7971, fresult, "Divide", 3, 6))
 {    cout << fresult;
 }
 ```
-The `RCP()` function returns `true` if the call was successful, `false` if it was not. Thefollowing parameters are required:
+The `RCP()` function returns `true` if the call was successful, `false` if it was not. Parameters are:
 
 1. IP address of the RPC Server
 2. Port number of the RPC Server
-3. Return value. (Skip if the function has no return)
+3. Return value (Skip if the function has no return)
 4. Name ID of the requested function
-
-Any additional parameters will be converted to bytes and sent with the request as data for calling the function with.  
+5. Any additional parameters will be converted to bytes and sent with the request as data for calling the function with.  
   
 More Examples:
 ```c++
